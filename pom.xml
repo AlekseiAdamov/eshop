@@ -4,6 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- Inherit defaults from Spring Boot -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.3</version>
+    </parent>
+
     <groupId>ru.alekseiadamov</groupId>
     <artifactId>eshop</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -12,6 +19,7 @@
     <modules>
         <module>db</module>
         <module>admin-app</module>
+        <module>api-app</module>
     </modules>
 
     <properties>
@@ -19,17 +27,4 @@
         <maven.compiler.target>11</maven.compiler.target>
         <java.version>11</java.version>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <!-- Import dependency management from Spring Boot -->
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.5.3</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>
