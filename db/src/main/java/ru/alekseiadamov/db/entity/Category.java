@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +21,9 @@ public class Category {
 
     @Column(length = 128, nullable = false, unique = true)
     private String name;
+
+    @OneToMany(mappedBy = "category")
+    private Set<Product> products;
 
     public Category(Long id, String name) {
         this.id = id;

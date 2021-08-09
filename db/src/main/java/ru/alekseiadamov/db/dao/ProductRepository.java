@@ -5,14 +5,10 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import ru.alekseiadamov.db.entity.Product;
 
-import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
-    List<Product> findAllByPriceGreaterThan(double minPrice);
-
-    List<Product> findAllByPriceLessThan(double maxPrice);
-
-    List<Product> findAllByPriceBetween(double minPrice, double maxPrice);
+    Optional<Product> findByName(String name);
 }

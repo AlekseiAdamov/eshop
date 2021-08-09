@@ -1,0 +1,18 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--/*@thymesVar id="users" type="org.springframework.data.domain.Page<ru.geekbrains.shop.entity.UserDTO>"*/-->
+<a th:fragment="page_link(pageNumber, linkText)" class="page-link"
+   th:text="${linkText}"
+   th:href="@{/user(
+                       page=${pageNumber},
+                       size=${users.size},
+                       username=${param.username},
+                       sortBy=${param.sortBy == null
+                                ? 'id'
+                                : param.sortBy},
+                       sortOrder=${param.sortOrder == null
+                                    ? 'asc'
+                                    : param.sortOrder})}" tabindex="-1">
+</a>
+
+</html>

@@ -24,10 +24,15 @@ public class Product {
     @Column(precision = 2)
     private Double price;
 
-    public Product(Long id, String name, double price) {
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
+
+    public Product(Long id, String name, Double price, Category category) {
         this.id = id;
         this.name = name;
         this.price = price;
+        this.category = category;
     }
 
     public Product(ProductDTO product) {
