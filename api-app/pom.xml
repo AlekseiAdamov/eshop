@@ -41,12 +41,12 @@
         <dependency>
             <groupId>ru.alekseiadamov</groupId>
             <artifactId>db</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>ru.alekseiadamov</groupId>
             <artifactId>admin-app</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 
