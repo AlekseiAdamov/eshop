@@ -1,6 +1,7 @@
 package ru.alekseiadamov.apiapp.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import ru.alekseiadamov.adminapp.controller.NotFoundException;
 import ru.alekseiadamov.adminapp.service.UserService;
@@ -30,6 +31,7 @@ public class UserResource {
                 .orElseThrow(() -> new NotFoundException(String.format("User with id %d not found", id)));
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping(produces = "application/json")
     public UserDTO create(@RequestBody UserDTO user) {
         if (user.getId() != null) {
@@ -39,6 +41,7 @@ public class UserResource {
         return user;
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping(produces = "application/json")
     public void update(@RequestBody UserDTO user) {
         if (user.getId() == null) {
@@ -47,6 +50,7 @@ public class UserResource {
         service.save(user);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping(path = "/{id}", produces = "application/json")
     public void delete(@PathVariable Long id) {
         service.deleteById(id);

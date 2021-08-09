@@ -1,6 +1,7 @@
 package ru.alekseiadamov.apiapp.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import ru.alekseiadamov.adminapp.controller.NotFoundException;
 import ru.alekseiadamov.adminapp.service.ProductService;
@@ -30,6 +31,7 @@ public class ProductResource {
                 .orElseThrow(() -> new NotFoundException(String.format("Product with id %d not found", id)));
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping(produces = "application/json")
     public ProductDTO create(@RequestBody ProductDTO product) {
         if (product.getId() != null) {
@@ -39,6 +41,7 @@ public class ProductResource {
         return product;
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping(produces = "application/json")
     public void update(@RequestBody ProductDTO product) {
         if (product.getId() == null) {
@@ -47,6 +50,7 @@ public class ProductResource {
         service.save(product);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping(path = "/{id}", produces = "application/json")
     public void delete(@PathVariable Long id) {
         service.deleteById(id);
