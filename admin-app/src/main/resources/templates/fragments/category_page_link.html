@@ -1,0 +1,18 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<!--/*@thymesVar id="categories" type="java.util.List"*/-->
+<a th:fragment="page_link(pageNumber, linkText)" class="page-link"
+   th:text="${linkText}"
+   th:href="@{/category(
+                       page=${pageNumber},
+                       size=${categories.size},
+                       name=${param.name},
+                       sortBy=${param.sortBy == null
+                                ? 'id'
+                                : param.sortBy},
+                       sortOrder=${param.sortOrder == null
+                                    ? 'asc'
+                                    : param.sortOrder})}" tabindex="-1">
+</a>
+
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<style>
+    .center {
+        text-align: center
+    }
+</style>
+
+<head th:replace="fragments/page_head :: page_head('Categories')">
+    <title>Categories</title>
+</head>
+
+<body>
+
+<nav th:replace="fragments/page_nav :: page_nav"></nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div sec:authorize="hasRole('ADMIN')" class="col-12">
+            <a class="btn btn-primary" th:href="@{/category/new}">Add category</a>
+        </div>
+
+        <div class="col-12 mt-3">
+            <form class="form-inline" th:method="get">
+                <div class="form-group mb-2 mr-2">
+                    <label for="name" class="sr-only">Category name</label>
+                    <input type="text" value="" class="form-control" id="name" th:value="${param.name}"
+                           name="name" placeholder="Category name">
+                </div>
+                <button type="submit" class="btn btn-primary mb-2 mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                         class="bi bi-funnel" viewBox="0 0 16 16">
+                        <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z"></path>
+                    </svg>
+                    Apply
+                </button>
+            </form>
+        </div>
+
+        <div class="col-12">
+            <table class="table table-bordered table-striped table-hover my-2">
+                <thead>
+                <tr>
+                    <th th:replace="fragments/category_table_header :: table_header('Id', 'id')"></th>
+                    <th th:replace="fragments/category_table_header :: table_header('Name', 'name')"></th>
+                    <th sec:authorize="hasRole('ADMIN')" class="center" scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${categories.hasContent()}" th:each="category : ${categories.content}">
+                    <!--/*@thymesVar id="category" type="ru.alekseiadamov.db.entity.Category"*/-->
+                    <th scope="row" class="center" th:text="${category.id}">ID</th>
+                    <td><a th:text="${category.name}">Name</a></td>
+                    <td sec:authorize="hasRole('ADMIN')">
+                        <a class="btn btn-success" th:href="@{/category/{id}(id = ${category.id})}"><i
+                                class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:method="delete" th:action="@{/category/{id}(id = ${category.id})}">
+                            <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <tr th:unless="${categories.hasContent()}">
+                    <td colspan="3">No categories found with the specified criteria</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${categories.hasContent() && categories.getTotalPages() > 1}" class="col-12 mt-3">
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li th:if="${categories.hasPrevious()}" class="page-item">
+                        <a th:replace="fragments/category_page_link :: page_link(${categories.number}, 'Previous')">Previous</a>
+                    </li>
+                    <li th:each="num : ${#numbers.sequence(1, categories.totalPages)}"
+                        th:classappend="${num == categories.number + 1} ? 'active'"
+                        class="page-item">
+                        <a th:replace="fragments/category_page_link :: page_link(${num}, ${num})">1</a>
+                    </li>
+                    <li th:if="${categories.hasNext()}" class="page-item">
+                        <a th:replace="fragments/category_page_link :: page_link(${categories.number + 2}, 'Next')">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/page_footer :: page_footer"></div>
+
+</body>
+</html>

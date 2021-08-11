@@ -2,10 +2,16 @@ package ru.alekseiadamov.db.entity;
 
 import org.springframework.data.jpa.domain.Specification;
 
+import javax.persistence.criteria.Join;
+
 public final class ProductSpecification {
 
-    public static Specification<Product> productName(String prefix) {
-        return (root, query, builder) -> builder.like(root.get("name"), prefix + "%");
+    private ProductSpecification() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static Specification<Product> name(String name) {
+        return (root, query, builder) -> builder.like(root.get("name"), "%" + name + "%");
     }
 
     public static Specification<Product> minPrice(Double price) {
@@ -14,5 +20,12 @@ public final class ProductSpecification {
 
     public static Specification<Product> maxPrice(Double price) {
         return (root, query, builder) -> builder.le(root.get("price"), price);
+    }
+
+    public static Specification<Product> category(String category) {
+        return (root, query, builder) -> {
+            Join<Product, Category> joinCategory = root.join("category");
+            return builder.like(joinCategory.get("name"), "%" + category + "%");
+        };
     }
 }

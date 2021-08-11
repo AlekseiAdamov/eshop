@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/page_head :: page_head(${category.name != null ? category.name : 'New category'})">
+    <title>Category</title>
+</head>
+
+<body>
+
+<nav th:replace="fragments/page_nav :: page_nav"></nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <form th:action="@{/category/}" method="post" th:object="${category}">
+                <input type="hidden" id="id" th:field="*{id}">
+                <div class="form-group">
+                    <label for="name">Category name</label>
+                    <input type="text" class="form-control" id="name" th:field="*{name}" autofocus="autofocus"
+                           placeholder="Enter category name">
+                    <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a th:href="@{/category/}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/page_footer :: page_footer"></div>
+
+</body>
+</html>
