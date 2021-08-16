@@ -17,7 +17,7 @@ public class UiWebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
                 .antMatchers("/product").authenticated()
                 .antMatchers("/category").authenticated()
                 .antMatchers("/user").hasRole("ADMIN")
-                .antMatchers("/user/**", "/product/**", "/category/**").hasRole("ADMIN")
+                .antMatchers("/user/**", "/product/**", "/category/**", "/brand/**").hasRole("ADMIN")
 
                 .and()
                 .formLogin()

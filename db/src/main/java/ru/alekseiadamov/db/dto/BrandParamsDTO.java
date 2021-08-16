@@ -7,12 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ProductListParamsDTO {
+public class BrandParamsDTO {
     private String name;
-    private Double minPrice;
-    private Double maxPrice;
-    private String category;
-    private String brand;
     private Integer page;
     private Integer size;
     private String sortBy;

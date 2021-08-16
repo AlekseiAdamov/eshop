@@ -16,4 +16,10 @@
     <changeSet id="1" author="alekseiadamov">
         <tagDatabase tag="v-1.0"/>
     </changeSet>
+
+    <include file="v-1.1/root.changelog.v-1.1.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="2" author="alekseiadamov">
+        <tagDatabase tag="v-1.1-brands"/>
+    </changeSet>
 </databaseChangeLog>

@@ -34,7 +34,8 @@ public class ProductServiceImpl implements ProductService {
                         product.getId(),
                         product.getName(),
                         product.getPrice(),
-                        product.getCategory()))
+                        product.getCategory(),
+                        product.getBrand()))
                 .collect(Collectors.toList());
     }
 
@@ -54,6 +55,9 @@ public class ProductServiceImpl implements ProductService {
         if (params.getCategory() != null) {
             specification = specification.and(ProductSpecification.category(params.getCategory()));
         }
+        if (params.getCategory() != null) {
+            specification = specification.and(ProductSpecification.brand(params.getBrand()));
+        }
 
         final Sort sortDirection = Optional.ofNullable(params.getSortOrder())
                 .orElse("asc")
@@ -72,7 +76,8 @@ public class ProductServiceImpl implements ProductService {
                         product.getId(),
                         product.getName(),
                         product.getPrice(),
-                        product.getCategory()));
+                        product.getCategory(),
+                        product.getBrand()));
     }
 
     @Override
@@ -82,7 +87,8 @@ public class ProductServiceImpl implements ProductService {
                         product.getId(),
                         product.getName(),
                         product.getPrice(),
-                        product.getCategory()));
+                        product.getCategory(),
+                        product.getBrand()));
     }
 
     @Override
@@ -92,7 +98,8 @@ public class ProductServiceImpl implements ProductService {
                 product.getId(),
                 product.getName(),
                 product.getPrice(),
-                product.getCategory());
+                product.getCategory(),
+                product.getBrand());
     }
 
     @Override
@@ -106,7 +113,8 @@ public class ProductServiceImpl implements ProductService {
                 product.getId(),
                 product.getName(),
                 product.getPrice(),
-                product.getCategory());
+                product.getCategory(),
+                product.getBrand());
         repository.save(persistentProduct);
     }
 
@@ -117,6 +125,7 @@ public class ProductServiceImpl implements ProductService {
                         product.getId(),
                         product.getName(),
                         product.getPrice(),
-                        product.getCategory()));
+                        product.getCategory(),
+                        product.getBrand()));
     }
 }

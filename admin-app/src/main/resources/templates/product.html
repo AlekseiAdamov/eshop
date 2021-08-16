@@ -50,6 +50,11 @@
                     <input type="text" value="" class="form-control" id="category" th:value="${param.category}"
                            name="category" placeholder="Category">
                 </div>
+                <div class="form-group mb-2 mr-2">
+                    <label for="brand" class="sr-only">Brand</label>
+                    <input type="text" value="" class="form-control" id="brand" th:value="${param.brand}"
+                           name="brand" placeholder="Brand">
+                </div>
                 <button type="submit" class="btn btn-primary mb-2 mr-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                          class="bi bi-funnel" viewBox="0 0 16 16">
@@ -68,6 +73,7 @@
                     <th th:replace="fragments/product_table_header :: table_header('Name', 'name')"></th>
                     <th th:replace="fragments/product_table_header :: table_header('Price, USD', 'price')"></th>
                     <th th:replace="fragments/product_table_header :: table_header('Category', 'category')"></th>
+                    <th th:replace="fragments/product_table_header :: table_header('Brand', 'brand')"></th>
                     <th sec:authorize="hasRole('ADMIN')" class="center" scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -80,6 +86,7 @@
                         Price
                     </td>
                     <td><a th:text="${product.category.name}">Category</a></td>
+                    <td><a th:text="${product.brand.name}">Brand</a></td>
                     <td sec:authorize="hasRole('ADMIN')">
                         <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i
                                 class="fas fa-edit"></i></a>

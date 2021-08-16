@@ -28,19 +28,16 @@ public class Product {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    public Product(Long id, String name, Double price, Category category) {
+    @ManyToOne
+    @JoinColumn(name = "brand_id", referencedColumnName = "id")
+    private Brand brand;
+
+    public Product(Long id, String name, Double price, Category category, Brand brand) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.category = category;
-    }
-
-    public Product(ProductDTO product) {
-        if (product.getId() != null) {
-            this.id = product.getId();
-        }
-        this.name = product.getName();
-        this.price = product.getPrice();
+        this.brand = brand;
     }
 
     @Override
@@ -49,6 +46,8 @@ public class Product {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
+                ", category=" + category +
+                ", brand=" + brand +
                 '}';
     }
 }

@@ -6,6 +6,7 @@
     <include file="db.changelog-20210815-164044265.xml" relativeToChangelogFile="true"/>
 
     <changeSet author="alekseiadamov" id="1629045652577-11">
+        <comment>Populated tables 'roles', 'users', 'users_roles', 'categories', 'products'</comment>
         <insert tableName="roles">
             <column name="name" value="ROLE_USER"/>
         </insert>
@@ -17,8 +18,8 @@
                   file="data/users.csv"
                   relativeToChangelogFile="true"
                   separator=";">
-            <column header="username" name="username" type="VARCHAR"/>
-            <column header="password" name="password" type="VARCHAR"/>
+            <column header="username" name="username" type="VARCHAR(128)"/>
+            <column header="password" name="password" type="VARCHAR(128)"/>
         </loadData>
 
         <insert tableName="users_roles">
@@ -33,16 +34,17 @@
         <loadData tableName="categories"
                   file="data/categories.csv"
                   relativeToChangelogFile="true">
-            <column header="name" name="name" type="VARCHAR"/>
+            <column header="name" name="name" type="VARCHAR(128)"/>
         </loadData>
 
         <loadData tableName="products"
                   file="data/products.csv"
                   relativeToChangelogFile="true"
                   separator=";">
-            <column header="name" name="name" type="VARCHAR"/>
-            <column header="price" name="price" type="NUMERIC"/>
-            <column header="category_id" name="category_id" type="NUMERIC"/>
+            <column header="name" name="name" type="VARCHAR(128)"/>
+            <column header="price" name="price" type="DOUBLE"/>
+            <column header="category_id" name="category_id" type="BIGINT"/>
         </loadData>
+        <rollback/>
     </changeSet>
 </databaseChangeLog>
