@@ -7,6 +7,11 @@ import ru.alekseiadamov.db.dto.PageParamsDTO;
 import java.util.Optional;
 
 public class PageParametersProcessor {
+
+    private PageParametersProcessor() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static PageRequest getPageRequest(PageParamsDTO params) {
         return PageRequest.of(
                 Optional.ofNullable(params.getPage()).orElse(1) - 1,
