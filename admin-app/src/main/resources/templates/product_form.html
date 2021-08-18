@@ -34,6 +34,16 @@
                                 th:selected="${product.category == category}"></option>
                     </select>
                     <p class="text-danger" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></p>
+
+                    <label for="brands">Categories</label>
+                    <select class="form-control selectpicker" id="brands" th:field="*{brand}" required
+                            data-live-search="true">
+                        <option th:each="brand : ${brands}"
+                                th:text="${brand.name}"
+                                th:value="${brand.id}"
+                                th:selected="${product.brand == brand}"></option>
+                    </select>
+                    <p class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></p>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a th:href="@{/product/}" class="btn btn-secondary">Cancel</a>

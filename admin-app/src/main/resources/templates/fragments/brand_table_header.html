@@ -1,0 +1,17 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th class="center" scope="col" th:fragment="table_header(title, column)">[[${title}]]
+    <!--/*@thymesVar id="brands" type="org.springframework.data.domain.Page<ru.alekseiadamov.db.dto.BrandDTO>"*/-->
+    <!--/*@thymesVar id="reverseSortOrder" type="java.lang.String"*/-->
+    <a th:href="@{/brand(
+                        page=${brands.number + 1},
+                           size=${brands.size},
+                           name=${param.name},
+                           sortBy=${column},
+                           sortOrder=${reverseSortOrder}
+                           )}">
+        <i class="fa fa-sort-down"></i>
+    </a>
+</th>
+
+</html>

@@ -3,6 +3,11 @@ Authorization: Basic user user
 
 ###
 
+GET http://localhost:8080/shop/api/v1/brand/all
+Authorization: Basic user user
+
+###
+
 GET http://localhost:8080/shop/api/v1/category/all
 Authorization: Basic user user
 ###

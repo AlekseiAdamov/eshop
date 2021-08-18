@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import ru.alekseiadamov.adminapp.service.BrandService;
 import ru.alekseiadamov.adminapp.service.CategoryService;
 import ru.alekseiadamov.adminapp.service.ProductService;
 import ru.alekseiadamov.db.dto.ProductDTO;
@@ -27,13 +28,16 @@ public class ProductController {
     private static final String REDIRECT_PAGE = "redirect:/product";
     private static final String PRODUCT_ATTRIBUTE = "product";
     private static final String CATEGORIES_ATTRIBUTE = "categories";
+    private static final String BRANDS_ATTRIBUTE = "brands";
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final BrandService brandService;
 
     @Autowired
-    public ProductController(ProductService productService, CategoryService categoryService) {
+    public ProductController(ProductService productService, CategoryService categoryService, BrandService brandService) {
         this.productService = productService;
         this.categoryService = categoryService;
+        this.brandService = brandService;
     }
 
     @GetMapping
@@ -47,12 +51,14 @@ public class ProductController {
         final String logMessage = String.format("Product list page requested with parameters: " +
                         "name = %s, " +
                         "minPrice = %s, " +
-                        "maxPrice = %s , " +
-                        "category = %s",
+                        "maxPrice = %s, " +
+                        "category = %s," +
+                        "brand = %s",
                 params.getName(),
                 params.getMinPrice(),
                 params.getMaxPrice(),
-                params.getCategory());
+                params.getCategory(),
+                params.getBrand());
         log.info(logMessage);
     }
 
@@ -68,6 +74,7 @@ public class ProductController {
         log.info("New product page requested");
         model.addAttribute(PRODUCT_ATTRIBUTE, new ProductDTO());
         model.addAttribute(CATEGORIES_ATTRIBUTE, categoryService.findAll());
+        model.addAttribute(BRANDS_ATTRIBUTE, brandService.findAll());
         return PRODUCT_FORM_PAGE;
     }
 
@@ -79,6 +86,7 @@ public class ProductController {
         if (product.isPresent()) {
             model.addAttribute(PRODUCT_ATTRIBUTE, productService.getById(id));
             model.addAttribute(CATEGORIES_ATTRIBUTE, categoryService.findAll());
+            model.addAttribute(BRANDS_ATTRIBUTE, brandService.findAll());
         } else {
             throw new NotFoundException(String.format("Product with id %d not found", id));
         }
@@ -102,8 +110,10 @@ public class ProductController {
     @PostMapping
     public String update(@Valid @ModelAttribute("product") ProductDTO product, BindingResult result, Model model) {
         checkIfCategorySpecified(product, result);
+        checkIfBrandSpecified(product, result);
         if (result.hasErrors()) {
             model.addAttribute(CATEGORIES_ATTRIBUTE, categoryService.findAll());
+            model.addAttribute(BRANDS_ATTRIBUTE, brandService.findAll());
             return PRODUCT_FORM_PAGE;
         }
         logUpdate(product);
@@ -112,7 +122,8 @@ public class ProductController {
     }
 
     private void logUpdate(ProductDTO product) {
-        if (product.getId() != null && productService.findById(product.getId()).isPresent()) {
+        Long productId = product.getId();
+        if (productId != null && productService.findById(productId).isPresent()) {
             log.info("Updating product");
         } else {
             log.info("Saving new product");
@@ -122,6 +133,12 @@ public class ProductController {
     private void checkIfCategorySpecified(ProductDTO product, BindingResult result) {
         if (product.getCategory() == null) {
             result.rejectValue("category", "", "Category must be specified!");
+        }
+    }
+
+    private void checkIfBrandSpecified(ProductDTO product, BindingResult result) {
+        if (product.getBrand() == null) {
+            result.rejectValue("brand", "", "Brand must be specified!");
         }
     }
 

@@ -28,4 +28,11 @@ public final class ProductSpecification {
             return builder.like(joinCategory.get("name"), "%" + category + "%");
         };
     }
+
+    public static Specification<Product> brand(String brand) {
+        return (root, query, builder) -> {
+            Join<Product, Category> joinCategory = root.join("brand");
+            return builder.like(joinCategory.get("name"), "%" + brand + "%");
+        };
+    }
 }
