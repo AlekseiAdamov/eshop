@@ -39,7 +39,7 @@ public class UserController {
     public String listPage(Model model, UserListParamsDTO params) {
 
         final String logMessage = String.format("User list page requested with parameters: userName = %s",
-                params.getUsername());
+                params.getName());
         log.info(logMessage);
 
         final Page<UserDTO> users = userService.findWithFilter(params);
@@ -111,9 +111,9 @@ public class UserController {
     }
 
     private void checkIfUsernameIsUnique(UserDTO user, BindingResult result) {
-        Optional<UserDTO> savedUser = userService.findByName(user.getUsername());
+        Optional<UserDTO> savedUser = userService.findByName(user.getName());
         if (savedUser.isPresent() && !savedUser.get().getId().equals(user.getId())) {
-            String message = String.format("User name '%s' is already in use!", user.getUsername());
+            String message = String.format("User name '%s' is already in use!", user.getName());
             result.rejectValue("username", "", message);
         }
     }

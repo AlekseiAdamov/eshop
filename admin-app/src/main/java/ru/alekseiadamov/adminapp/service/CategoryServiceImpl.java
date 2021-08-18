@@ -2,8 +2,6 @@ package ru.alekseiadamov.adminapp.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import ru.alekseiadamov.db.dao.CategoryRepository;
@@ -11,6 +9,7 @@ import ru.alekseiadamov.db.dto.CategoryDTO;
 import ru.alekseiadamov.db.dto.CategoryParamsDTO;
 import ru.alekseiadamov.db.entity.Category;
 import ru.alekseiadamov.db.entity.CategorySpecification;
+import ru.alekseiadamov.db.util.PageParametersProcessor;
 
 import java.util.List;
 import java.util.Optional;
@@ -78,19 +77,7 @@ public class CategoryServiceImpl implements CategoryService {
             specification = specification.and(CategorySpecification.categoryName(params.getName()));
         }
 
-        final Sort sortDirection = Optional.ofNullable(params.getSortOrder())
-                .orElse("asc")
-                .equalsIgnoreCase(Sort.Direction.ASC.name())
-                ? Sort.by(Optional.ofNullable(params.getSortBy()).orElse("id")).ascending()
-                : Sort.by(Optional.ofNullable(params.getSortBy()).orElse("id")).descending();
-
-        final PageRequest pageRequest = PageRequest.of(
-                Optional.ofNullable(params.getPage()).orElse(1) - 1,
-                Optional.ofNullable(params.getSize()).orElse(3),
-                sortDirection
-        );
-
-        return repository.findAll(specification, pageRequest)
+        return repository.findAll(specification, PageParametersProcessor.getPageRequest(params))
                 .map(category -> new CategoryDTO(
                         category.getId(),
                         category.getName()));

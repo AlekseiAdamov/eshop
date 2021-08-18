@@ -50,8 +50,8 @@ public class RegistrationController {
     }
 
     private void checkIfUsernameIsUnique(UserDTO user, BindingResult result) {
-        if (service.findByName(user.getUsername()).isPresent()) {
-            String message = String.format("User name '%s' is already in use!", user.getUsername());
+        if (service.findByName(user.getName()).isPresent()) {
+            String message = String.format("User name '%s' is already in use!", user.getName());
             result.rejectValue("username", "", message);
         }
     }

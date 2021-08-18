@@ -7,10 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class BrandParamsDTO {
-    private String name;
-    private Integer page;
-    private Integer size;
-    private String sortBy;
-    private String sortOrder;
+public class BrandParamsDTO extends PageParamsDTO {
 }

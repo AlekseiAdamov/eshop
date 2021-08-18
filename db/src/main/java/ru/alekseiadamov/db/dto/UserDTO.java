@@ -16,7 +16,7 @@ public class UserDTO {
     private Long id;
 
     @NotBlank
-    private String username;
+    private String name;
 
     @NotBlank
     private String password;
@@ -26,9 +26,9 @@ public class UserDTO {
 
     private Set<RoleDTO> roles;
 
-    public UserDTO(Long id, String username, Set<RoleDTO> roles) {
+    public UserDTO(Long id, String name, Set<RoleDTO> roles) {
         this.id = id;
-        this.username = username;
+        this.name = name;
         this.roles = new HashSet<>(roles);
     }
 }

@@ -16,9 +16,9 @@
                 <input type="hidden" id="id" th:field="*{id}">
                 <div class="form-group">
                     <label for="username">User name</label>
-                    <input type="text" class="form-control mb-2" id="username" th:field="*{username}" autofocus="autofocus"
+                    <input type="text" class="form-control mb-2" id="username" th:field="*{name}" autofocus="autofocus"
                            placeholder="Enter user name">
-                    <p class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                    <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 
                     <label for="password">User password</label>
                     <input type="password" class="form-control mb-2" id="password" th:field="*{password}"

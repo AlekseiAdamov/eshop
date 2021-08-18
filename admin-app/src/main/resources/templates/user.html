@@ -32,7 +32,7 @@
             <form class="form-inline" th:method="get">
                 <div class="form-group mb-2 mr-2">
                     <label for="username" class="sr-only">User name</label>
-                    <input type="text" class="form-control" id="username" th:value="${param.username}"
+                    <input type="text" class="form-control" id="username" th:value="${param.name}"
                            name="username" placeholder="User name">
                 </div>
                 <button type="submit" class="btn btn-primary mb-2 mr-2">
@@ -58,7 +58,7 @@
                 <tr th:if="${users.hasContent()}" th:each="user : ${users.content}">
                     <!--/*@thymesVar id="user" type="ru.alekseiadamov.db.dto.UserDTO"*/-->
                     <th scope="row" class="center" th:text="${user.id}">ID</th>
-                    <td><a th:text="${user.username}">Name</a></td>
+                    <td><a th:text="${user.name}">Name</a></td>
                     <td sec:authorize="hasRole('ADMIN')">
                         <a class="btn btn-success" th:href="@{/user/{id}(id = ${user.id})}"><i class="fas fa-edit"></i></a>
                         <form class="d-inline" th:method="delete" th:action="@{/user/{id}(id = ${user.id})}">

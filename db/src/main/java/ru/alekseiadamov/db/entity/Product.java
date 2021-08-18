@@ -1,15 +1,14 @@
 package ru.alekseiadamov.db.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import ru.alekseiadamov.db.dto.ProductDTO;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "products")
 public class Product {
@@ -31,23 +30,4 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brand;
-
-    public Product(Long id, String name, Double price, Category category, Brand brand) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.category = category;
-        this.brand = brand;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", category=" + category +
-                ", brand=" + brand +
-                '}';
-    }
 }

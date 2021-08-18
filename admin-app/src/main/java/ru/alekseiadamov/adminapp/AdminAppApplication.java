@@ -9,8 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
-@EntityScan(basePackages = {"ru.alekseiadamov"})
-@EnableJpaRepositories(basePackages = {"ru.alekseiadamov"})
+@EntityScan(basePackages = {"ru.alekseiadamov.db.entity"})
+@EnableJpaRepositories(basePackages = {"ru.alekseiadamov.db.dao"})
 public class AdminAppApplication {
 
     @Bean
