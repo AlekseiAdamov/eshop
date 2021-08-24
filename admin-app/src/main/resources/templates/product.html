@@ -66,10 +66,11 @@
         </div>
 
         <div class="col-12">
-            <table class="table table-bordered table-striped table-hover my-2">
+            <table class="table table-bordered table-hover my-2">
                 <thead>
                 <tr>
                     <th th:replace="fragments/product_table_header :: table_header('Id', 'id')"></th>
+                    <th class="center" scope="col">Picture</th>
                     <th th:replace="fragments/product_table_header :: table_header('Name', 'name')"></th>
                     <th th:replace="fragments/product_table_header :: table_header('Price, USD', 'price')"></th>
                     <th th:replace="fragments/product_table_header :: table_header('Category', 'category')"></th>
@@ -80,14 +81,23 @@
                 <tbody>
                 <!--/*@thymesVar id="product" type="ru.alekseiadamov.db.dto.ProductDTO"*/-->
                 <tr th:if="${products.hasContent()}" th:each="product : ${products.content}">
-                    <th scope="row" class="center" th:text="${product.id}">ID</th>
-                    <td><a th:text="${product.name}">Name</a></td>
-                    <td class="right" th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">
+                    <th scope="row" class="center align-middle" th:text="${product.id}">ID</th>
+                    <td class="align-middle" th:with="picture=${pictures.get(product.id)}">
+                        <div th:if="${picture != null}" class="center">
+                            <a class="thumbnail" th:href="@{/picture/{id}(id = ${picture.id})}">
+                                <img th:src="@{/picture/{id}(id = ${picture.id})}"
+                                     th:alt="${product.name}" height="100px"/>
+                            </a>
+                        </div>
+                    </td>
+                    <td class="align-middle"><a th:text="${product.name}">Name</a></td>
+                    <td class="right align-middle"
+                        th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 2, 'POINT')}">
                         Price
                     </td>
-                    <td><a th:text="${product.category.name}">Category</a></td>
-                    <td><a th:text="${product.brand.name}">Brand</a></td>
-                    <td sec:authorize="hasRole('ADMIN')">
+                    <td class="align-middle"><a th:text="${product.category.name}">Category</a></td>
+                    <td class="align-middle"><a th:text="${product.brand.name}">Brand</a></td>
+                    <td sec:authorize="hasRole('ADMIN')" class="align-middle">
                         <a class="btn btn-success" th:href="@{/product/{id}(id = ${product.id})}"><i
                                 class="fas fa-edit"></i></a>
                         <form class="d-inline" th:method="delete" th:action="@{/product/{id}(id = ${product.id})}">

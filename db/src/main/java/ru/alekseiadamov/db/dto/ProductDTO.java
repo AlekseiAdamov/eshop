@@ -4,17 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 import ru.alekseiadamov.db.entity.Brand;
 import ru.alekseiadamov.db.entity.Category;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProductDTO {
 
     private Long id;
@@ -31,4 +32,16 @@ public class ProductDTO {
 
     @NotNull
     private Brand brand;
+
+    private List<Long> pictures;
+
+    private MultipartFile[] newPictures;
+
+    public ProductDTO(Long id, String name, Double price, Category category, Brand brand) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.brand = brand;
+    }
 }

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"ru.alekseiadamov"})
 @EntityScan(basePackages = {"ru.alekseiadamov.db.entity"})
 @EnableJpaRepositories(basePackages = {"ru.alekseiadamov.db.dao"})
 public class AdminAppApplication {

@@ -51,6 +51,11 @@
             <artifactId>db</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>ru.alekseiadamov</groupId>
+            <artifactId>picture-service</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
