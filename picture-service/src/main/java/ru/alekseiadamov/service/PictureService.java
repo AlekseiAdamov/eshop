@@ -21,4 +21,6 @@ public interface PictureService {
     List<Picture> findAllByProducts(List<Long> productIds);
 
     Map<Long, Picture> getFirstPicturesOfProducts(List<Long> productIds);
+
+    void deleteById(Long id);
 }

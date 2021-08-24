@@ -95,10 +95,7 @@ public class ProductController {
 
         Optional<ProductDTO> product = productService.findById(id);
         if (product.isPresent()) {
-            model.addAttribute(PRODUCT_ATTRIBUTE, productService.getById(id));
-            model.addAttribute(CATEGORIES_ATTRIBUTE, categoryService.findAll());
-            model.addAttribute(BRANDS_ATTRIBUTE, brandService.findAll());
-            model.addAttribute(PICTURES_ATTRIBUTE, pictureService.findAllByProductId(id));
+            addProductPageAttributes(id, model);
         } else {
             throw new NotFoundException(String.format("Product with id %d not found", id));
         }
@@ -161,5 +158,20 @@ public class ProductController {
         modelAndView.addObject("message", e.getMessage());
         modelAndView.setStatus(HttpStatus.NOT_FOUND);
         return modelAndView;
+    }
+
+    @DeleteMapping("/{id}/delete_picture/{picture_id}")
+    public String deleteProductPicture(@PathVariable("id") Long id, @PathVariable("picture_id") Long pictureId, Model model) {
+        log.info("Deleting picture with id {}", pictureId);
+        pictureService.deleteById(pictureId);
+        addProductPageAttributes(id, model);
+        return PRODUCT_FORM_PAGE;
+    }
+
+    private void addProductPageAttributes(Long id, Model model) {
+        model.addAttribute(PRODUCT_ATTRIBUTE, productService.getById(id));
+        model.addAttribute(CATEGORIES_ATTRIBUTE, categoryService.findAll());
+        model.addAttribute(BRANDS_ATTRIBUTE, brandService.findAll());
+        model.addAttribute(PICTURES_ATTRIBUTE, pictureService.findAllByProductId(id));
     }
 }

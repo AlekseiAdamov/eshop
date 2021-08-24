@@ -94,4 +94,19 @@ public class PictureServiceImpl implements PictureService {
                         (picture1, picture2) -> picture1
                 ));
     }
+
+    @Override
+    public void deleteById(Long id) {
+        final Optional<Picture> picture = repository.findById(id);
+        if (picture.isEmpty()) {
+            return;
+        }
+        try {
+            Files.delete(Path.of(storagePath, picture.get().getStorageUUID()));
+        } catch (IOException e) {
+            log.error("Unable to delete file of the picture with id {}: {}", id, e.getMessage());
+        } finally {
+            repository.deleteById(id);
+        }
+    }
 }
