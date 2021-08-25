@@ -2,14 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <style>
-    #image-delete {
+    .image {
         position: relative;
+        display: inline-block;
     }
 
-    #button-image-delete {
+    .overlay-button {
         position: absolute;
-        bottom: 0;
-        left: 0;
+        right: 0;
+        top: 0;
+        z-index: 1;
     }
 
     .btn-primary-outline {
@@ -75,9 +77,9 @@
         <div class="row" th:if="${!pictures.isEmpty()}" th:each="picture : ${pictures}">
             <div th:if="${picture != null}" class="col-lg-4 col-md-4 col-xs-4 thumb">
                 <a class="thumbnail" th:href="@{/picture/{id}(id = ${picture.id})}">
-                    <img th:src="@{/picture/{id}(id = ${picture.id})}" th:alt="${product.name}" height="100px"/>
-                    <div id="image-delete">
-                        <div id="button-image-delete" data-role="fieldcontain">
+                    <div class="image">
+                        <img th:src="@{/picture/{id}(id = ${picture.id})}" th:alt="${product.name}" height="150px"/>
+                        <div class="overlay-button">
                             <form class="d-inline" th:method="delete"
                                   th:action="@{/product/{product_id}/delete_picture/{picture_id}(product_id = ${product.id}, picture_id = ${picture.id})}">
                                 <button type="submit" class="btn btn-primary-outline">
