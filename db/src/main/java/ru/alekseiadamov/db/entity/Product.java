@@ -3,11 +3,12 @@ package ru.alekseiadamov.db.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 @Entity
 @Table(name = "products")
@@ -30,4 +31,15 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brand;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Picture> pictures = new ArrayList<>();
+
+    public Product(Long id, String name, Double price, Category category, Brand brand) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.category = category;
+        this.brand = brand;
+    }
 }

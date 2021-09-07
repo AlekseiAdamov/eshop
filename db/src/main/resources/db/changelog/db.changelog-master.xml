@@ -22,4 +22,11 @@
     <changeSet id="2" author="alekseiadamov">
         <tagDatabase tag="v-1.1-brands"/>
     </changeSet>
+
+    <include file="v-1.2/root.changelog.v-1.2.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="3" author="alekseiadamov">
+        <tagDatabase tag="v-1.2-pictures"/>
+    </changeSet>
+
 </databaseChangeLog>

@@ -14,9 +14,12 @@ import ru.alekseiadamov.adminapp.service.CategoryService;
 import ru.alekseiadamov.adminapp.service.ProductService;
 import ru.alekseiadamov.db.dto.ProductDTO;
 import ru.alekseiadamov.db.dto.ProductListParamsDTO;
+import ru.alekseiadamov.service.PictureService;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -29,15 +32,21 @@ public class ProductController {
     private static final String PRODUCT_ATTRIBUTE = "product";
     private static final String CATEGORIES_ATTRIBUTE = "categories";
     private static final String BRANDS_ATTRIBUTE = "brands";
+    private static final String PICTURES_ATTRIBUTE = "pictures";
     private final ProductService productService;
     private final CategoryService categoryService;
     private final BrandService brandService;
+    private final PictureService pictureService;
 
     @Autowired
-    public ProductController(ProductService productService, CategoryService categoryService, BrandService brandService) {
+    public ProductController(ProductService productService,
+                             CategoryService categoryService,
+                             BrandService brandService,
+                             PictureService pictureService) {
         this.productService = productService;
         this.categoryService = categoryService;
         this.brandService = brandService;
+        this.pictureService = pictureService;
     }
 
     @GetMapping
@@ -65,7 +74,9 @@ public class ProductController {
     private void addListPageAttributes(Model model, ProductListParamsDTO params) {
         final Page<ProductDTO> products = productService.findWithFilter(params);
         final String reverseSortOrder = "asc".equals(params.getSortOrder()) ? "desc" : "asc";
+        final List<Long> productIds = products.map(ProductDTO::getId).stream().collect(Collectors.toList());
         model.addAttribute("products", products);
+        model.addAttribute(PICTURES_ATTRIBUTE, pictureService.getFirstPicturesOfProducts(productIds));
         model.addAttribute("reverseSortOrder", reverseSortOrder);
     }
 
@@ -84,9 +95,7 @@ public class ProductController {
 
         Optional<ProductDTO> product = productService.findById(id);
         if (product.isPresent()) {
-            model.addAttribute(PRODUCT_ATTRIBUTE, productService.getById(id));
-            model.addAttribute(CATEGORIES_ATTRIBUTE, categoryService.findAll());
-            model.addAttribute(BRANDS_ATTRIBUTE, brandService.findAll());
+            addProductPageAttributes(id, model);
         } else {
             throw new NotFoundException(String.format("Product with id %d not found", id));
         }
@@ -114,6 +123,7 @@ public class ProductController {
         if (result.hasErrors()) {
             model.addAttribute(CATEGORIES_ATTRIBUTE, categoryService.findAll());
             model.addAttribute(BRANDS_ATTRIBUTE, brandService.findAll());
+            model.addAttribute(PICTURES_ATTRIBUTE, pictureService.findAllByProductId(product.getId()));
             return PRODUCT_FORM_PAGE;
         }
         logUpdate(product);
@@ -148,5 +158,20 @@ public class ProductController {
         modelAndView.addObject("message", e.getMessage());
         modelAndView.setStatus(HttpStatus.NOT_FOUND);
         return modelAndView;
+    }
+
+    @DeleteMapping("/{id}/delete_picture/{picture_id}")
+    public String deleteProductPicture(@PathVariable("id") Long id, @PathVariable("picture_id") Long pictureId, Model model) {
+        log.info("Deleting picture with id {}", pictureId);
+        pictureService.deleteById(pictureId);
+        addProductPageAttributes(id, model);
+        return PRODUCT_FORM_PAGE;
+    }
+
+    private void addProductPageAttributes(Long id, Model model) {
+        model.addAttribute(PRODUCT_ATTRIBUTE, productService.getById(id));
+        model.addAttribute(CATEGORIES_ATTRIBUTE, categoryService.findAll());
+        model.addAttribute(BRANDS_ATTRIBUTE, brandService.findAll());
+        model.addAttribute(PICTURES_ATTRIBUTE, pictureService.findAllByProductId(id));
     }
 }

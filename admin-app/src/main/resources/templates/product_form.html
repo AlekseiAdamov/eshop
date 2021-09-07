@@ -1,6 +1,25 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<style>
+    .image {
+        position: relative;
+        display: inline-block;
+    }
+
+    .overlay-button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1;
+    }
+
+    .btn-primary-outline {
+        background-color: transparent;
+        border-color: #ccc;
+    }
+</style>
+
 <head th:replace="fragments/page_head :: page_head(${product.name != null ? product.name : 'New product'})">
     <title>Product</title>
 </head>
@@ -12,7 +31,7 @@
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <form th:action="@{/product/}" method="post" th:object="${product}">
+            <form th:action="@{/product/}" method="post" th:object="${product}" enctype="multipart/form-data">
                 <input type="hidden" id="id" th:field="*{id}">
                 <div class="form-group">
                     <label for="name">Product name</label>
@@ -45,9 +64,36 @@
                     </select>
                     <p class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></p>
                 </div>
+                <div class="form-group">
+                    <label for="newPictures">Product images</label>
+                    <input th:field="*{newPictures}" type="file" accept="image/png, image/jpeg"
+                           id="newPictures" name="newPictures" class="form-control-file" multiple
+                           placeholder="Upload new product pictures">
+                </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a th:href="@{/product/}" class="btn btn-secondary">Cancel</a>
             </form>
+        </div>
+        <div class="row" th:if="${!pictures.isEmpty()}" th:each="picture : ${pictures}">
+            <div th:if="${picture != null}" class="col-lg-4 col-md-4 col-xs-4 thumb">
+                <a class="thumbnail" th:href="@{/picture/{id}(id = ${picture.id})}">
+                    <div class="image">
+                        <img th:src="@{/picture/{id}(id = ${picture.id})}" th:alt="${product.name}" height="150px"/>
+                        <div class="overlay-button">
+                            <form class="d-inline" th:method="delete"
+                                  th:action="@{/product/{product_id}/delete_picture/{picture_id}(product_id = ${product.id}, picture_id = ${picture.id})}">
+                                <button type="submit" class="btn btn-primary-outline">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                         class="bi bi-x-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                                    </svg>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 </div>
