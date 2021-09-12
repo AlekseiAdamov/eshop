@@ -1,4 +1,4 @@
-package ru.alekseiadamov.service;
+package ru.alekseiadamov.pictureservice.service;
 
 import ru.alekseiadamov.db.entity.Picture;
 

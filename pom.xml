@@ -18,9 +18,9 @@
 
     <modules>
         <module>db</module>
+        <module>picture-service</module>
         <module>admin-app</module>
         <module>api-app</module>
-        <module>picture-service</module>
     </modules>
 
     <properties>

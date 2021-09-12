@@ -14,7 +14,7 @@ import ru.alekseiadamov.adminapp.service.CategoryService;
 import ru.alekseiadamov.adminapp.service.ProductService;
 import ru.alekseiadamov.db.dto.ProductDTO;
 import ru.alekseiadamov.db.dto.ProductListParamsDTO;
-import ru.alekseiadamov.service.PictureService;
+import ru.alekseiadamov.pictureservice.service.PictureService;
 
 import javax.validation.Valid;
 import java.util.List;

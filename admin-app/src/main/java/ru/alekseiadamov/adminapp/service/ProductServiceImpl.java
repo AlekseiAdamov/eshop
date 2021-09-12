@@ -14,7 +14,7 @@ import ru.alekseiadamov.db.dto.ProductDTO;
 import ru.alekseiadamov.db.dto.ProductListParamsDTO;
 import ru.alekseiadamov.db.entity.*;
 import ru.alekseiadamov.db.util.PageParametersProcessor;
-import ru.alekseiadamov.service.PictureService;
+import ru.alekseiadamov.pictureservice.service.PictureService;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
