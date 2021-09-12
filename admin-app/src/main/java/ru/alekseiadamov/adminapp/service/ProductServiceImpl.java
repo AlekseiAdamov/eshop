@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
         if (params.getMaxPrice() != null) {
             specification = specification.and(ProductSpecification.maxPrice(params.getMaxPrice()));
         }
-        if (params.getCategory() != null) {
+        if (params.getCategory() != null && params.getCategory() != 0) {
             specification = specification.and(ProductSpecification.category(params.getCategory()));
         }
         if (params.getCategory() != null) {

@@ -47,8 +47,15 @@
                 </div>
                 <div class="form-group mb-2 mr-2">
                     <label for="category" class="sr-only">Category</label>
-                    <input type="text" value="" class="form-control" id="category" th:value="${param.category}"
-                           name="category" placeholder="Category">
+                    <select name="category" id="category" class="form-control">
+                        <option th:selected="${param.category == null || param.category[0].isBlank()}" value="0">All
+                        </option>
+                        <option th:each="category : ${categories}"
+                                th:text="${category.name}"
+                                th:value="${category.id}"
+                                th:selected="${#strings.equals((param.category != null ? param.category[0] : ''), #strings.toString(category.id))}">
+                        </option>
+                    </select>
                 </div>
                 <div class="form-group mb-2 mr-2">
                     <label for="brand" class="sr-only">Brand</label>

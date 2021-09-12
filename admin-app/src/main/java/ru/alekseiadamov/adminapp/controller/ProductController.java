@@ -76,6 +76,7 @@ public class ProductController {
         final String reverseSortOrder = "asc".equals(params.getSortOrder()) ? "desc" : "asc";
         final List<Long> productIds = products.map(ProductDTO::getId).stream().collect(Collectors.toList());
         model.addAttribute("products", products);
+        model.addAttribute(CATEGORIES_ATTRIBUTE, categoryService.findAll());
         model.addAttribute(PICTURES_ATTRIBUTE, pictureService.getFirstPicturesOfProducts(productIds));
         model.addAttribute("reverseSortOrder", reverseSortOrder);
     }

@@ -10,6 +10,6 @@ import lombok.Setter;
 public class ProductListParamsDTO extends PageParamsDTO {
     private Double minPrice;
     private Double maxPrice;
-    private String category;
+    private Integer category;
     private String brand;
 }
