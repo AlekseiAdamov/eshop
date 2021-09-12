@@ -14,18 +14,19 @@ public class UiWebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/**/*.css", "/**/*.js").permitAll()
-                .antMatchers("/product").authenticated()
-                .antMatchers("/category").authenticated()
-                .antMatchers("/user").hasRole("ADMIN")
-                .antMatchers("/user/**", "/product/**", "/category/**", "/brand/**").hasRole("ADMIN")
+                .antMatchers("/shop/product").authenticated()
+                .antMatchers("/shop/category").authenticated()
+                .antMatchers("/shop/brand").authenticated()
+                .antMatchers("/shop/user").hasRole("ADMIN")
+                .antMatchers("/shop/user/**", "/shop/product/**", "/shop/category/**", "/shop/brand/**").hasRole("ADMIN")
 
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/product")
+                .loginPage("/shop/login")
+                .defaultSuccessUrl("/shop/product")
 
                 .and()
                 .exceptionHandling()
-                .accessDeniedPage("/access_denied");
+                .accessDeniedPage("/shop/access_denied");
     }
 }

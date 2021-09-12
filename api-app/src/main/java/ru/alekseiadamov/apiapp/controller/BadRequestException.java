@@ -1,4 +1,4 @@
-package ru.alekseiadamov.apiapp.rest;
+package ru.alekseiadamov.apiapp.controller;
 
 public class BadRequestException extends RuntimeException {
 
