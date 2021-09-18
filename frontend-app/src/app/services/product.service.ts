@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Product} from "../model/product";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Page} from "../model/page";
 
 @Injectable({
@@ -13,7 +13,10 @@ export class ProductService {
   constructor(private http: HttpClient) {
   }
 
-  public findAll() {
-    return this.http.get<Page>('/api/v1/product/all').toPromise();
+  public findAll(pageNumber: number, elementsPerPage: number) {
+    let params = new HttpParams()
+      .append('page', pageNumber)
+      .append('size', elementsPerPage);
+    return this.http.get<Page>("/api/v1/product/all", {params: params}).toPromise();
   }
 }

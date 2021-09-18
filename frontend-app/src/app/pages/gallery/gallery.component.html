@@ -16,7 +16,7 @@
 
       <label for="priceFilter" class="form-label">Price</label>
       <div class="input-group mb-3" id="priceFilter">
-        <input type="number" class="form-control"  placeholder="From" aria-label="From">
+        <input type="number" class="form-control" placeholder="From" aria-label="From">
         <span class="input-group-text">-</span>
         <input type="number" class="form-control" placeholder="To" aria-label="To">
       </div>
@@ -30,7 +30,8 @@
 
       <div *ngFor="let product of products" class="col">
         <div class="card">
-          <img *ngIf="product.pictures.length > 0" class="card-img-top" src="https://picsum.photos/100/100?random=1" alt="{{product.name}}">
+          <img *ngIf="product.pictures.length > 0" class="card-img-top" src="/picture/{{product.pictures[0]}}"
+               alt="{{product.name}}">
           <div class="card-body">
             <h5 class="card-title">{{product.name}}</h5>
             <p class="card-text">{{product.description}}</p>
@@ -44,17 +45,22 @@
 
     <div class="col-md-9 col-xs-12 mt-3">
       <nav aria-label="...">
-        <ul class="pagination">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+        <ul *ngIf="totalPages > 1" class="pagination">
+          <li *ngIf="pageNumber > 1 && totalPages >= 2" class="page-item">
+            <a class="page-link" href="/product?page={{pageNumber - 1}}&size={{elementsPerPage}}" tabindex="-1"
+               aria-disabled="true">Previous</a>
           </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li *ngIf="pageNumber > 1" class="page-item">
+            <a class="page-link" href="/product?page={{pageNumber - 1}}&size={{elementsPerPage}}">{{pageNumber - 1}}</a>
+          </li>
           <li class="page-item active" aria-current="page">
-            <a class="page-link" href="#">2</a>
+            <a class="page-link" href="/product?page={{pageNumber}}&size={{elementsPerPage}}">{{pageNumber}}</a>
           </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
+          <li *ngIf="pageNumber + 1 <= totalPages" class="page-item"><a class="page-link"
+                                   href="/product?page={{pageNumber + 1}}&size={{elementsPerPage}}">{{pageNumber + 1}}</a>
+          </li>
+          <li *ngIf="pageNumber < totalPages" class="page-item">
+            <a class="page-link" href="/product?page={{pageNumber + 1}}&size={{elementsPerPage}}">Next</a>
           </li>
         </ul>
       </nav>
