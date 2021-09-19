@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Product} from "../model/product";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Page} from "../model/page";
 
@@ -7,8 +6,6 @@ import {Page} from "../model/page";
   providedIn: 'root'
 })
 export class ProductService {
-
-  private products: Product[] = [];
 
   constructor(private http: HttpClient) {
   }

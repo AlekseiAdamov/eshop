@@ -30,8 +30,9 @@
 
       <div *ngFor="let product of products" class="col">
         <div class="card">
-          <img *ngIf="product.pictures.length > 0" class="card-img-top" src="/picture/{{product.pictures[0]}}"
-               alt="{{product.name}}">
+          <a *ngIf="product.pictures" href="/api/v1/picture/{{product.pictures[0]}}">
+            <img class="card-img-top" src="/api/v1/picture/{{product.pictures[0]}}" alt="{{product.name}}">
+          </a>
           <div class="card-body">
             <h5 class="card-title">{{product.name}}</h5>
             <p class="card-text">{{product.description}}</p>
@@ -57,7 +58,7 @@
             <a class="page-link" href="/product?page={{pageNumber}}&size={{elementsPerPage}}">{{pageNumber}}</a>
           </li>
           <li *ngIf="pageNumber + 1 <= totalPages" class="page-item"><a class="page-link"
-                                   href="/product?page={{pageNumber + 1}}&size={{elementsPerPage}}">{{pageNumber + 1}}</a>
+                                                                        href="/product?page={{pageNumber + 1}}&size={{elementsPerPage}}">{{pageNumber + 1}}</a>
           </li>
           <li *ngIf="pageNumber < totalPages" class="page-item">
             <a class="page-link" href="/product?page={{pageNumber + 1}}&size={{elementsPerPage}}">Next</a>

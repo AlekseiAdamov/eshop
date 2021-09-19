@@ -27,16 +27,16 @@ export class GalleryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      this.route.queryParams.subscribe(params => {
-        let pageNumber = +params['page'];
-        this.pageNumber = isNaN(pageNumber) ? DEFAULT_PAGE_NUMBER : pageNumber;
-        let elementsPerPage = +params['size'];
-        this.elementsPerPage = isNaN(elementsPerPage) ? DEFAULT_PAGE_SIZE : elementsPerPage;
-      });
-      this.retrieveProducts(this.pageNumber, this.elementsPerPage);
+    this.route.queryParams.subscribe(params => {
+      let pageNumber = +params['page'];
+      this.pageNumber = isNaN(pageNumber) ? DEFAULT_PAGE_NUMBER : pageNumber;
+      let elementsPerPage = +params['size'];
+      this.elementsPerPage = isNaN(elementsPerPage) ? DEFAULT_PAGE_SIZE : elementsPerPage;
+    });
+    this.retrieveProducts(this.pageNumber, this.elementsPerPage);
   }
 
-  public retrieveProducts(pageNumber: number, elementsPerPage: number) {
+  private retrieveProducts(pageNumber: number, elementsPerPage: number) {
     this.productService.findAll(pageNumber, elementsPerPage)
       .then(response => {
         this.products = response.content;

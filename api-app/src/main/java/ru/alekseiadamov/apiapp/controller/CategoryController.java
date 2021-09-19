@@ -1,6 +1,7 @@
 package ru.alekseiadamov.apiapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,12 +22,12 @@ public class CategoryController {
         this.service = service;
     }
 
-    @GetMapping(path = "/all", produces = "application/json")
+    @GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CategoryDTO> findAll() {
         return service.findAll();
     }
 
-    @GetMapping(path = "/{id}", produces = "application/json")
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public CategoryDTO findById(@PathVariable Long id) {
         return service.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Category with id %d not found", id)));

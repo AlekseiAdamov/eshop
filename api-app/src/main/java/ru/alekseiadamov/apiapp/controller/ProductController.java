@@ -2,6 +2,7 @@ package ru.alekseiadamov.apiapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ public class ProductController {
         this.service = service;
     }
 
-    @GetMapping(path = "/all", produces = "application/json")
+    @GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<ProductDTO> findAll(ProductListParamsDTO params) {
         return service.findWithFilter(params);
     }
