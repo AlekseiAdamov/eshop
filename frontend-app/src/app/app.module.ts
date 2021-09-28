@@ -8,13 +8,29 @@ import {FooterComponent} from './components/footer/footer.component';
 import {GalleryComponent} from './pages/gallery/gallery.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
+import {PaginationComponent} from './components/pagination/pagination.component';
+import {ProductFilterComponent} from './components/product-filter/product-filter.component';
+import {ProductGalleryComponent} from './components/product-gallery/product-gallery.component';
+import {CartComponent} from './pages/cart/cart.component';
+import {LoginComponent} from './pages/login/login.component';
+import {OrderComponent} from './pages/order/order.component';
+import {RegisterComponent} from './pages/register/register.component';
+import {ProductComponent} from './pages/product/product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavBarComponent,
     FooterComponent,
-    GalleryComponent
+    GalleryComponent,
+    PaginationComponent,
+    ProductFilterComponent,
+    ProductGalleryComponent,
+    CartComponent,
+    LoginComponent,
+    OrderComponent,
+    RegisterComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,

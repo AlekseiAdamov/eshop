@@ -1,0 +1,21 @@
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+  <div class="col" *ngFor="let prod of products">
+    <div class="card">
+      <img class="card-img-top" *ngIf="prod.pictures.length > 0" src="/api/v1/picture/{{prod.pictures[0]}}" alt="Picture of {{prod.name}}" width="100">
+      <img class="card-img-top" *ngIf="prod.pictures.length == 0" src="https://www.freeiconspng.com/uploads/no-image-icon-1.jpg" alt="No photo available" width="100">
+      <div class="card-body">
+        <h5 class="card-title">{{prod.name}}</h5>
+        <p class="card-text">{{prod.description}}</p>
+        <p class="card-text">Price: ${{prod.price | number:'1.2-2'}}</p>
+        <a routerLink="/product/{{prod.id}}" class="btn btn-primary me-2">View</a>
+        <a (click)="addToCart(prod.id)" class="btn btn-primary">Add to card</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col" *ngIf="products.length == 0">
+    No data
+  </div>
+
+</div>

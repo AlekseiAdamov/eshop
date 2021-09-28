@@ -6,6 +6,7 @@ import lombok.Setter;
 import ru.alekseiadamov.db.entity.Brand;
 import ru.alekseiadamov.db.entity.Category;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +17,17 @@ public class ProductDTO {
 
     private Long id;
     private String name;
-    private Double price;
+    private BigDecimal price;
     private Category category;
     private Brand brand;
     private List<Long> pictures;
 
-    public ProductDTO(Long id, String name, Double price, Category category, Brand brand, List<Long> pictures) {
+    public ProductDTO(Long id,
+                      String name,
+                      BigDecimal price,
+                      Category category,
+                      Brand brand,
+                      List<Long> pictures) {
         this.id = id;
         this.name = name;
         this.price = price;
