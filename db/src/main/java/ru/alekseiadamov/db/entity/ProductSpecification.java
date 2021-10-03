@@ -3,6 +3,7 @@ package ru.alekseiadamov.db.entity;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.Join;
+import java.math.BigDecimal;
 
 public final class ProductSpecification {
 
@@ -14,11 +15,11 @@ public final class ProductSpecification {
         return (root, query, builder) -> builder.like(root.get("name"), "%" + name + "%");
     }
 
-    public static Specification<Product> minPrice(Double price) {
+    public static Specification<Product> minPrice(BigDecimal price) {
         return (root, query, builder) -> builder.ge(root.get("price"), price);
     }
 
-    public static Specification<Product> maxPrice(Double price) {
+    public static Specification<Product> maxPrice(BigDecimal price) {
         return (root, query, builder) -> builder.le(root.get("price"), price);
     }
 

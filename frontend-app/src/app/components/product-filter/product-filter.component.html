@@ -1,0 +1,27 @@
+<label for="namePattern" class="form-label">Categories</label>
+<ul class="list-group mb-3">
+  <li class="list-group-item active"><a role="button">Category 1</a></li>
+  <li class="list-group-item"><a role="button">Category 2</a></li>
+  <li class="list-group-item"><a role="button">Category 3</a></li>
+  <li class="list-group-item"><a role="button">Category 4</a></li>
+  <li class="list-group-item"><a role="button">Category 5</a></li>
+</ul>
+
+<form (ngSubmit)="applyFilter()">
+  <label for="namePattern" class="form-label">Name</label>
+  <div class="input-group mb-3" id="namePattern">
+    <input type="text" [(ngModel)]="productFilter.name"
+           class="form-control" name="name" placeholder="Name" aria-label="Name">
+  </div>
+
+  <label for="priceFilter" class="form-label">Price</label>
+  <div class="input-group mb-3" id="priceFilter">
+    <input type="number" [(ngModel)]="productFilter.minPrice"
+           class="form-control" name="minPrice" placeholder="From" aria-label="From">
+    <span class="input-group-text">-</span>
+    <input type="number" [(ngModel)]="productFilter.maxPrice"
+           class="form-control" name="maxPrice" placeholder="To" aria-label="To">
+  </div>
+
+  <button class="btn btn-primary" type="submit"><em class="fa fa-filter"></em> Apply</button>
+</form>

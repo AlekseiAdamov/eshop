@@ -11,6 +11,9 @@ import ru.alekseiadamov.apiapp.dto.ProductDTO;
 import ru.alekseiadamov.apiapp.dto.ProductListParamsDTO;
 import ru.alekseiadamov.apiapp.service.ProductService;
 
+// "/v1/product" instead of "/product" because
+// the same mapping "/product" is in the ru.alekseiadamov.adminapp.controller.ProductController class
+// and the method "/api/v1/product/{id}" returns HTML instead of JSON.
 @RestController("apiProductController")
 @RequestMapping("/v1/product")
 public class ProductController {
@@ -27,7 +30,7 @@ public class ProductController {
         return service.findWithFilter(params);
     }
 
-    @GetMapping(path = "/{id}", produces = "application/json")
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ProductDTO findById(@PathVariable Long id) {
         return service.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Product with id %d not found", id)));

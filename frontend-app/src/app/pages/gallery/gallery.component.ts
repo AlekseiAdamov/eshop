@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ProductService} from 'src/app/services/product.service';
+import {ProductFilterDto} from "../../model/product-filter";
+import {ProductService} from "../../services/product.service";
 import {Product} from "../../model/product";
-import {ActivatedRoute} from "@angular/router";
+import {Page} from "../../model/page";
 
-export const GALLERY_URL = "product";
-const DEFAULT_PAGE_SIZE: number = 3;
-const DEFAULT_PAGE_NUMBER: number = 1;
+export const GALLERY_URL = 'product';
 
 @Component({
   selector: 'app-gallery',
@@ -13,42 +12,53 @@ const DEFAULT_PAGE_NUMBER: number = 1;
   styleUrls: ['./gallery.component.scss']
 })
 export class GalleryComponent implements OnInit {
-  products: Product[] = [];
-  totalPages: number = 1;
-  totalElements: number = 1;
-  elementsPerPage: number = DEFAULT_PAGE_SIZE;
-  pageNumber: number = DEFAULT_PAGE_NUMBER;
-  isError: boolean = false;
 
-  constructor(
-    private productService: ProductService,
-    private route: ActivatedRoute,
-  ) {
+  products: Product[] = [];
+  page?: Page;
+  productFilter?: ProductFilterDto;
+  pageNumber: number = 1;
+
+  constructor(public productService: ProductService) {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      let pageNumber = +params['page'];
-      this.pageNumber = isNaN(pageNumber) ? DEFAULT_PAGE_NUMBER : pageNumber;
-      let elementsPerPage = +params['size'];
-      this.elementsPerPage = isNaN(elementsPerPage) ? DEFAULT_PAGE_SIZE : elementsPerPage;
-    });
-    this.retrieveProducts(this.pageNumber, this.elementsPerPage);
+    this.productService.findAll()
+      .subscribe(
+        res => {
+          console.log("Loading products");
+          this.page = res;
+          this.products = res.content;
+        },
+        err => {
+          console.log(`Can't load products ${err}`);
+        });
   }
 
-  private retrieveProducts(pageNumber: number, elementsPerPage: number) {
-    this.productService.findAll(pageNumber, elementsPerPage)
-      .then(response => {
-        this.products = response.content;
-        this.totalPages = response.totalPages;
-        this.totalElements = response.totalElements;
-        this.elementsPerPage = response.size;
-        this.pageNumber = response.number + 1; // First page number is 0.
-      })
-      .catch(error => {
-        console.error(error);
-        this.isError = true;
-      })
+  filterApplied($event: ProductFilterDto) {
+    console.log($event);
+    this.productFilter = $event;
+    this.productService.findAll($event, 1)
+      .subscribe(
+        res => {
+          this.page = res;
+          this.products = res.content;
+          this.pageNumber = 1;
+        },
+        err => {
+          console.log(`Can't load products ${err}`);
+        });
   }
 
+  goToPage($event: number) {
+    this.productService.findAll(this.productFilter, $event)
+      .subscribe(
+        res => {
+          this.page = res;
+          this.products = res.content;
+          this.pageNumber = res.number + 1;
+        },
+        err => {
+          console.log(`Can't load products ${err}`);
+        });
+  }
 }

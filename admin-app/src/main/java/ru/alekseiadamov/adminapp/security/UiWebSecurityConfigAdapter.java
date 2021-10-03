@@ -12,6 +12,11 @@ public class UiWebSecurityConfigAdapter extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                /* Without .csrf().disable() REST API POST methods return error 404
+                   even if their antMatcher("/api/**") declared in another configuration
+                   (see ApiWebSecurityConfigAdapter class) */
+                .csrf().disable()
+
                 .authorizeRequests()
                 .antMatchers("/**/*.css", "/**/*.js").permitAll()
                 .antMatchers("/shop/product").authenticated()

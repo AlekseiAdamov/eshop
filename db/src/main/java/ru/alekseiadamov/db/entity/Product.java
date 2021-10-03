@@ -3,6 +3,7 @@ package ru.alekseiadamov.db.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Product {
     private String name;
 
     @Column(precision = 2)
-    private Double price;
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
@@ -35,7 +36,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Picture> pictures = new ArrayList<>();
 
-    public Product(Long id, String name, Double price, Category category, Brand brand) {
+    public Product(Long id, String name, BigDecimal price, Category category, Brand brand) {
         this.id = id;
         this.name = name;
         this.price = price;
