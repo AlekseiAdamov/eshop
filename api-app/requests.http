@@ -1,22 +1,22 @@
-GET http://localhost:8080/shop/api/v1/product/all
+GET http://localhost:8080/api/v1/product/all
 Authorization: Basic user user
 
 ###
 
-GET http://localhost:8080/shop/api/v1/brand/all
+GET http://localhost:8080/api/v1/brand/all
 Authorization: Basic user user
 
 ###
 
-GET http://localhost:8080/shop/api/v1/category/all
+GET http://localhost:8080/api/v1/category/all
 Authorization: Basic user user
 ###
 
-GET http://localhost:8080/shop/api/v1/user/all
+GET http://localhost:8080/api/v1/user/all
 
 ###
 
-POST http://localhost:8080/shop/api/v1/category
+POST http://localhost:8080/api/v1/category
 Content-Type: application/json
 Authorization: Basic admin admin
 

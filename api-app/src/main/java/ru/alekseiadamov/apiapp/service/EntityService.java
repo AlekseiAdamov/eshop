@@ -1,4 +1,4 @@
-package ru.alekseiadamov.adminapp.service;
+package ru.alekseiadamov.apiapp.service;
 
 import org.springframework.data.domain.Page;
 
@@ -14,10 +14,6 @@ public interface EntityService<T, P> {
     Page<T> findWithFilter(P params);
 
     T getById(Long id);
-
-    void deleteById(Long id);
-
-    void save(T entity);
 
     Optional<T> findByName(String name);
 }

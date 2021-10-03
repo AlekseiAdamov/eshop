@@ -22,10 +22,10 @@ public final class ProductSpecification {
         return (root, query, builder) -> builder.le(root.get("price"), price);
     }
 
-    public static Specification<Product> category(String category) {
+    public static Specification<Product> category(Integer categoryId) {
         return (root, query, builder) -> {
             Join<Product, Category> joinCategory = root.join("category");
-            return builder.like(joinCategory.get("name"), "%" + category + "%");
+            return builder.equal(joinCategory.get("id"), categoryId);
         };
     }
 
