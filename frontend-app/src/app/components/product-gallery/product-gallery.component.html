@@ -9,7 +9,7 @@
         <p class="card-text">{{prod.description}}</p>
         <p class="card-text">Price: ${{prod.price | number:'1.2-2'}}</p>
         <a routerLink="/product/{{prod.id}}" class="btn btn-primary me-2">View</a>
-        <a (click)="addToCart(prod.id)" class="btn btn-primary">Add to card</a>
+        <a (click)="addToCart(prod.id)" class="btn btn-primary"><em class="fa fa-shopping-cart"></em> Add to cart</a>
       </div>
     </div>
   </div>

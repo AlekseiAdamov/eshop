@@ -3,10 +3,7 @@ package ru.alekseiadamov.apiapp.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.alekseiadamov.apiapp.dto.AddLineItemDTO;
 import ru.alekseiadamov.apiapp.dto.AllCartDTO;
 import ru.alekseiadamov.apiapp.dto.LineItem;
@@ -30,8 +27,13 @@ public class CartController {
         this.productService = productService;
     }
 
+    @GetMapping(path = "/all")
+    public AllCartDTO findAll() {
+        return new AllCartDTO(cartService.getLineItems(), cartService.getSubTotal());
+    }
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public List<LineItem> addToCart(AddLineItemDTO addLineItemDto) {
+    public List<LineItem> addToCart(@RequestBody AddLineItemDTO addLineItemDto) {
         log.info("New LineItem: productId = {}, quantity = {}",
                 addLineItemDto.getProductId(),
                 addLineItemDto.getQuantity());
@@ -49,8 +51,32 @@ public class CartController {
         return cartService.getLineItems();
     }
 
-    @GetMapping(path = "/all")
-    public AllCartDTO findAll() {
-        return new AllCartDTO(cartService.getLineItems(), cartService.getSubTotal());
+    @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteLineItem(@RequestBody LineItem lineItem) {
+        cartService.removeProduct(lineItem.getProductDto(), lineItem.getColor(), lineItem.getMaterial());
     }
+
+    @DeleteMapping("/clear")
+    public void clearCart() {
+        cartService.clearCart();
+    }
+
+    @PutMapping(path = "/increment", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<LineItem> incrementLineItemQuantity(@RequestBody LineItem lineItem) {
+        log.info("Changed LineItem: productId = {}, quantity = {}",
+                lineItem.getProductId(),
+                lineItem.getQuantity() + 1);
+        cartService.addProductQuantity(lineItem.getProductDto(), lineItem.getColor(), lineItem.getMaterial(), 1);
+        return cartService.getLineItems();
+    }
+
+    @PutMapping(path = "/decrement", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<LineItem> decrementLineItemQuantity(@RequestBody LineItem lineItem) {
+        log.info("Changed LineItem: productId = {}, quantity = {}",
+                lineItem.getProductId(),
+                lineItem.getQuantity() - 1);
+        cartService.removeProductQuantity(lineItem.getProductDto(), lineItem.getColor(), lineItem.getMaterial(), 1);
+        return cartService.getLineItems();
+    }
+
 }

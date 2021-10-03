@@ -1,8 +1,6 @@
 package ru.alekseiadamov.apiapp.service;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,8 @@ import java.util.stream.Collectors;
 
 @Service
 @Scope(scopeName = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CartServiceImpl implements CartService {
 
     private final Map<LineItem, Integer> lineItems;
@@ -33,18 +33,37 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void addProductQuantity(ProductDTO productDto, String color, String material, int quantity) {
+        // Request may be not only from frontend.
+        if (productDto == null) {
+            return;
+        }
         LineItem lineItem = new LineItem(productDto, color, material);
         lineItems.put(lineItem, lineItems.getOrDefault(lineItem, 0) + quantity);
     }
 
     @Override
     public void removeProductQuantity(ProductDTO productDto, String color, String material, int quantity) {
-        // TODO
+        // Request may be not only from frontend.
+        if (productDto == null) {
+            return;
+        }
+        LineItem lineItem = new LineItem(productDto, color, material);
+        int cartQuantity = lineItems.get(lineItem);
+        if (quantity >= cartQuantity) {
+            lineItems.remove(lineItem);
+        } else {
+            lineItems.put(lineItem, cartQuantity - quantity);
+        }
     }
 
     @Override
     public void removeProduct(ProductDTO productDto, String color, String material) {
-        // TODO
+        // Request may be not only from frontend.
+        if (productDto == null) {
+            return;
+        }
+        LineItem lineItem = new LineItem(productDto, color, material);
+        lineItems.remove(lineItem);
     }
 
     @Override
@@ -61,5 +80,10 @@ public class CartServiceImpl implements CartService {
                 .stream()
                 .map(LineItem::getItemTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    @Override
+    public void clearCart() {
+        lineItems.clear();
     }
 }

@@ -9,17 +9,19 @@
 
 <form (ngSubmit)="applyFilter()">
   <label for="namePattern" class="form-label">Name</label>
-  <div class="input-group mb-3">
-    <input type="text" [(ngModel)]="productFilter.name" class="form-control" name="namePattern" id="namePattern"
-           placeholder="Name" aria-label="Name">
+  <div class="input-group mb-3" id="namePattern">
+    <input type="text" [(ngModel)]="productFilter.name"
+           class="form-control" name="name" placeholder="Name" aria-label="Name">
   </div>
 
   <label for="priceFilter" class="form-label">Price</label>
   <div class="input-group mb-3" id="priceFilter">
-    <input type="number" class="form-control" placeholder="From" aria-label="From">
+    <input type="number" [(ngModel)]="productFilter.minPrice"
+           class="form-control" name="minPrice" placeholder="From" aria-label="From">
     <span class="input-group-text">-</span>
-    <input type="number" class="form-control" placeholder="To" aria-label="To">
+    <input type="number" [(ngModel)]="productFilter.maxPrice"
+           class="form-control" name="maxPrice" placeholder="To" aria-label="To">
   </div>
 
-  <button class="btn btn-primary" type="submit">Apply</button>
+  <button class="btn btn-primary" type="submit"><em class="fa fa-filter"></em> Apply</button>
 </form>

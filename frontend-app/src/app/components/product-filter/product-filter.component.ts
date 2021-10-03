@@ -10,7 +10,7 @@ export class ProductFilterComponent implements OnInit {
 
   @Output() filterApplied = new EventEmitter<ProductFilterDto>();
 
-  productFilter: ProductFilterDto = new ProductFilterDto("", 0, 0);
+  public productFilter: ProductFilterDto = new ProductFilterDto("", 0, 0);
 
   constructor() {
   }
