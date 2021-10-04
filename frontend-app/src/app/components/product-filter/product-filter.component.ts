@@ -21,4 +21,13 @@ export class ProductFilterComponent implements OnInit {
   applyFilter() {
     this.filterApplied.emit(this.productFilter);
   }
+
+  clearFilter() {
+    if (this.productFilter.name != ""
+      || this.productFilter.minPrice != 0
+      || this.productFilter.maxPrice != 0) {
+      this.productFilter = new ProductFilterDto("", 0, 0);
+      this.applyFilter();
+    }
+  }
 }
