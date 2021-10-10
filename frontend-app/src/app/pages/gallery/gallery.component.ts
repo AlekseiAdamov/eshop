@@ -30,7 +30,7 @@ export class GalleryComponent implements OnInit {
           this.products = res.content;
         },
         err => {
-          console.log(`Can't load products ${err}`);
+          GalleryComponent.logError(err);
         });
   }
 
@@ -45,7 +45,7 @@ export class GalleryComponent implements OnInit {
           this.pageNumber = 1;
         },
         err => {
-          console.log(`Can't load products ${err}`);
+          GalleryComponent.logError(err);
         });
   }
 
@@ -58,7 +58,11 @@ export class GalleryComponent implements OnInit {
           this.pageNumber = res.number + 1;
         },
         err => {
-          console.log(`Can't load products ${err}`);
+          GalleryComponent.logError(err);
         });
+  }
+
+  private static logError(err: Error) {
+    console.log(`Can't load products: ${err.message}`);
   }
 }

@@ -24,9 +24,6 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("On pagination updated")
-    console.log(changes);
-    console.log(this.page);
     if (this.page != null) {
       this.numbers = Array.from(Array(this.page.totalPages).keys());
       this.pageNumber = this.page.number + 1;
@@ -34,7 +31,6 @@ export class PaginationComponent implements OnInit, OnChanges {
   }
 
   goToPage(page: number) {
-    console.log(`Page number ${page}`)
     this.goToPageEvent.emit(page);
   }
 }

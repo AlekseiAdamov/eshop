@@ -36,6 +36,9 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Picture> pictures = new ArrayList<>();
 
+    @OneToMany(mappedBy = "order")
+    private List<OrderLineItem> orderLineItems;
+
     public Product(Long id, String name, BigDecimal price, Category category, Brand brand) {
         this.id = id;
         this.name = name;

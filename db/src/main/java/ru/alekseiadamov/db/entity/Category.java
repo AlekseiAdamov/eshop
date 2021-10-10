@@ -1,6 +1,7 @@
 package ru.alekseiadamov.db.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @Entity
 @Table(name = "categories")
 public class Category {

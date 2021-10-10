@@ -1,6 +1,7 @@
 package ru.alekseiadamov.apiapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LineItem {
 

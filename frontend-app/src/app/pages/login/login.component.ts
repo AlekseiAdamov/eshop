@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
         }
       }, error => {
         this.isError = true;
-        console.log(`Authentication error ${error}`);
+        console.log(`Authentication error: ${error.message}`);
       })
   }
 }
