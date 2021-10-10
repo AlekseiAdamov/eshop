@@ -29,4 +29,9 @@
         <tagDatabase tag="v-1.2-pictures"/>
     </changeSet>
 
+    <include file="v-1.3/root.changelog.v-1.3.xml" relativeToChangelogFile="true"/>
+
+    <changeSet id="4" author="alekseiadamov">
+        <tagDatabase tag="v-1.3-orders"/>
+    </changeSet>
 </databaseChangeLog>

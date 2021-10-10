@@ -13,13 +13,13 @@ export class UnauthorizedInterceptor implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('Intercepted unauthorized error');
+    console.log(`Intercepted unauthorized error: ${request.url}`);
     if (request.url === '/api/v1/login' || request.url === '/api/v1/logout') {
       return next.handle(request);
     }
     return next.handle(request).pipe(catchError(err => {
       if (err.status === 401) {
-        console.log('Intercepted unauthorized error');
+        console.log(`Intercepted unauthorized error: ${err.message}`);
         this.auth.logout();
         this.router.navigateByUrl('/login');
       }

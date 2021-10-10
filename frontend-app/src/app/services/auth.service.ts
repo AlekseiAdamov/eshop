@@ -23,10 +23,10 @@ export class AuthService {
   authenticate(credentials: Credentials): Observable<AuthResult> {
 
     const headers = new HttpHeaders(credentials ? {
-      authorization: 'Basic ' + btoa(credentials.username + ':' + credentials.password)
+      authorization: 'Basic ' + btoa(`${credentials.username}:${credentials.password}`)
     } : {});
 
-    return this.http.get('/api/v1/login', {headers: headers})
+    return this.http.get('api/v1/login', {headers: headers})
       .pipe(
         map(resp => {
           if ('username' in resp) {
@@ -43,7 +43,7 @@ export class AuthService {
     if (this.isAuthenticated()) {
       this.currentUser = undefined;
       localStorage.removeItem("current_user");
-      this.http.post('/api/v1/logout', {}).subscribe();
+      this.http.post('api/v1/logout', {}).subscribe();
     }
   }
 

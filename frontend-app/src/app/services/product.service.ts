@@ -14,7 +14,6 @@ export class ProductService {
 
   public findAll(productFilter?: ProductFilterDto, page?: number): Observable<Page> {
     let params = new HttpParams();
-    console.log(productFilter);
 
     if (productFilter?.name != undefined && productFilter?.name != "") {
       params = params.append('name', productFilter.name);
